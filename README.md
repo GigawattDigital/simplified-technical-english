@@ -1,14 +1,34 @@
-# ASD-STE100 Skill — Simplified Technical English for Agent Output
+# Simplified Technical English skill - Prevent AI Slop in Code Comments and Documentation by using ASD-STE100
 
-A Claude Code skill that rewrites dense, ambiguous English into [ASD-STE100 Simplified Technical English](https://www.asd-ste100.org/) (STE) — the controlled-language standard the aerospace and defense industry built so aircraft maintenance instructions cannot be misread.
+This is an  Claude Code skill that rewrites dense, ambiguous English into [ASD-STE100 Simplified Technical English](https://www.asd-ste100.org/) (STE) — the controlled-language standard the aerospace and defense industry built so aircraft maintenance instructions cannot be misread.
 
-This skill repurposes that same discipline for a different reader: an **AI agent** parsing another agent's output, a tool description, an error message, or an inter-agent instruction, with no human in the loop to resolve ambiguity.
+This skill repurposes that same discipline for a different reader: AI-assisted code comments and documentation.
 
-## Why STE, and Why for Agents
+It is fork of [danyuchn/asd-ste100-skill](https://github.com/danyuchn/asd-ste100-skill) which applies ASD-STE to inter-agent communication.
 
-STE exists because a misread instruction on an aircraft can kill people, and the intended readers were often not native English speakers with no author to call for clarification. The standard's fix: one meaning per word, active voice, simple tenses, one instruction per sentence, short sentences, no dropped words.
+This projects is concerned with the _prose_ that AI adds to code, and adds the ability for users to customize the list of "slop-isms" that they don't want to ever see again. My current pet peeve is "load-bearing"). More high-level instructions can also be added that current LLMs might over-use in the future ("Don't use 
 
-An LLM agent parsing another agent's output is in a strikingly similar position — no back-channel, no way to ask "did you mean X or Y?" The same rules that keep a mechanic from misreading a torque spec keep a downstream agent from misreading a tool description or an inter-agent message.
+## Why STE, and Why for code comments and documentation
+
+STE exists because a misunderstood instruction in an aircraft maintenance manual can kill people, the intended readers are often not native English speakers, and translations need to be very straightforward. The standard fixes this with rules: one meaning per word, active voice, simple tenses, one instruction per sentence, short sentences, no dropped words.
+
+If you don't give LLMs a writing style to use, they will often use colorful metaphors, overly formal language, conversational slang, or complex sentence structures and big words where a shorter, more direct, plain sentence will do. Code comments and and documentation should be clear and simple.
+
+## Customization
+
+The motivation for this project is also to give this skill the ability to learn. I notice today's models frequently anthropomorphize code logic, writing things such as, "this function is _doing a lot of work_" or "this data structure _does most of the heavy lifting_", which is fine, until you start seeing it use those same mechanisms over and over, even when they add nothing to the code that one is trying to read and understand.
+
+But next month it will be something else, and next year something else still, that triggers the "ai;dr" reaction in human developers who (hopefully, still) read a code and docs a lots, and just need them to be useful and not get in our way.
+
+So this skill let's us add our own new, emergent "AI-isms" to its list of **things not to do**, and save them in structured data files, so they're not forgotten when the AI's context is cleared, a new version ships, or you just start working on a new project.
+
+---
+
+Editorial note: The rest of the content below is lightly edited from the upstream project's README.
+
+TODO: Review and revise the rest if/as necessary.
+
+---
 
 ## Before / After
 
@@ -50,7 +70,7 @@ Full rule summary and citations: [`references/writing-rules.md`](references/writ
 The fastest way to install this skill is the [skills CLI](https://skills.sh/) — no clone, no path setup. Run it from your project root:
 
 ```bash
-npx skills add danyuchn/asd-ste100-skill
+npx skills add GigawattDigital/simplified-technical-english
 ```
 
 This pulls the skill from the GitHub repo and installs it for the current project. The CLI sends anonymous install telemetry (skill name and timestamp, no personal or device information) to help rank skills on the skills.sh leaderboard. Set `DISABLE_TELEMETRY=1` to opt out.
@@ -60,7 +80,7 @@ Update later with `npx skills update`.
 ### Clone
 
 ```bash
-git clone https://github.com/danyuchn/asd-ste100-skill ~/.claude/skills/asd-ste100
+git clone https://github.com/GigawattDigital/simplified-technical-english ~/.claude/skills/simplified-technical-english
 ```
 
 This clones the repo into `~/.claude/skills/`, making the skill available in every Claude Code project. Best for contributors and anyone who wants a live checkout that updates with `git pull`.
@@ -91,9 +111,7 @@ One limit worth stating up front: this fixes the form of a text, not its substan
 
 - [ASD-STE100 official site](https://www.asd-ste100.org/)
 - [ASD-STE100 — About STE](https://www.asd-ste100.org/about_STE.html)
-- [ASD Europe — Simplified Technical English](https://www.asd-europe.org/standards-specifications/simplified-technical-english/)
-- [Simplified Technical English — Wikipedia](https://en.wikipedia.org/wiki/Simplified_Technical_English)
-- [TechScribe — ASD-STE100 Simplified Technical English](https://www.techscribe.co.uk/techw/asd-simplified-technical-english.htm)
+- [ASD-STE100 - AI White Paper](https://www.asd-ste100.org/assets/files/WhitePaper-ASD-STE100_and_AI.pdf)
 
 ## License
 
